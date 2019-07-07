@@ -1,35 +1,24 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<title>Homepage</title>
+	{% if title %}
+		<title>Flask Blog - {{ title }}</title>
+	{% else %}
+		<title>Flask Blog</title>
+	{% endif %}
 {% endblock %}
 
 {% block body %}
-<div class='content'>
-<h1>TODO List</h1>
-<table>
-	<tr>
-		<th>Task</th>
-		<th>Added</th>
-		<th>Progress</th>
-		<th>Actions</th>
-	</tr>
-	{% for data in data %}
-	<tr>
-		<td>{{ data[1] }}</td>
-		<td>{{ data[2] }}</td>
-		<td><progress value={{ data[3] }} max=100></progress></td>
-		<td><a href='/update/{{data[0]}}'>update</a><br>
-			<a href='/delete/{{data[0]}}'>delete</a>
-		</td>
-	</tr>
+	{% for post in posts %}
+		<article class="media content-section">
+		  <div class="media-body">
+		    <div class="article-metadata">
+		      <a class="mr-2" href="#">{{ post.author }}</a>
+		      <small class="text-muted">{{ post.date_posted }}</small>
+		    </div>
+		    <h2><a class="article-title" href="#">{{ post.title }}</a></h2>
+		    <p class="article-content">{{ post.content }}</p>
+		  </div>
+		</article>
 	{% endfor %}
-</table>
-	<div class='form'>
-		<form action="/" method="POST">
-            <input type="text" name="content" id="content" required>
-            <input type="submit" value="Add Task">
-        </form>
-	</div>
-</div>
 {% endblock %}
